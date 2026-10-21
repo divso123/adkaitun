@@ -1,0 +1,128 @@
+getgenv().Configs = {
+    ["Roll"] = {
+        AutoRoll = true -- Automatically rolls for characters continuously
+    },
+    ["Collect"] = {
+        AutoCollectBalance = true -- Collects money from stands
+    },
+    ["Equip"] = {
+        AutoEquipBest = true, -- Places the highest-earning units on stands
+        EquipProjectLevel = 100, -- Compares unit income at this level so low-level units aren't disadvantaged
+        EquipMinGain = 1 -- Won't swap units if income gain is less than this % (empty stands still get filled normally)
+    },
+    ["Upgrades"] = {
+        UpgradeUnit = true, -- Levels up units on stands, prioritizing the most cost-efficient ones
+        UpgradeUnitInterval = 1, -- Check interval in seconds
+        UpgradeUnitMaxPayback = 3600, -- Only upgrades that pay back within this many seconds (3600 = 1 hour)
+        UpgradeUnitMaxLevel = 0, -- Max level cap for upgrades; 0 = unlimited
+        UpgradeUnitMaxPerCycle = 3, -- Max upgrades per cycle
+        BuyUpgrade = true, -- Buys permanent upgrades from the shop
+        BuyUpgradeInterval = 2, -- Check interval in seconds
+        BuyUpgradeMaxPerCycle = 5, -- Max purchases per cycle
+        BuyUpgradeMaxCashPercent = 50, -- Only buys upgrades costing up to this % of current cash
+        BuyUpgradePriority = { -- Purchase priority order, top to bottom
+            [1] = "Luck",
+            [2] = "Fortune",
+            [3] = "Roll Speed",
+            [4] = "Money"
+        },
+        KeepMoneyForDice = true, -- Skips unit upgrades if saving for the next dice is faster income
+        KeepMoneyForRebirth = true -- Same as above but for rebirth instead
+    },
+    ["Dice"] = {
+        AutoBuyDice = true, -- Buys a new dice when you can afford it
+        AutoEquipDice = true -- Equips the newly purchased dice immediately
+    },
+    ["Rebirth"] = {
+        AutoRebirth = true,
+        MaxRebirth = 12 -- Stops after reaching this rebirth count
+    },
+    ["Tower"] = {
+        AutoTower = true,
+        Tower = "Auto", -- "Auto" = runs towers in order, skips any that can't be entered, or specify one tower name e.g. "Dragon Tower"
+        -- Valid tower names: Infinity Tower, Hidden Leaf Tower, Pirate Tower, Cursed Tower, Dragon Tower, Slayer Tower, Shadow Tower
+        EquipBestTowerTeam = true -- Builds the strongest possible team before entering a tower each time
+    },
+    ["Trait"] = {
+        AutoTrait = true, -- Rerolls Traits using Trait Rerolls, targeting the highest-earning unit first
+        TraitStopAt = { "Genesis", "Paradox", "Eternal" }, -- Stops rerolling once a Trait from this list is obtained
+        TraitStopAtOrAbove = true, -- If enabled, also stops when getting a Trait with a money multiplier >= the lowest in the list (lowest here is Eternal)
+        TraitOverrideProtected = true, -- Allows rerolling over locked Traits; if disabled, skips units with a locked Trait
+        TraitMaxUnits = 1 -- How many units to reroll for, sorted by highest income first
+    },
+    ["RebirthStat"] = {
+        AutoRebirthStat = true, -- Spends Rebirth points on Stats (1 point per rebirth)
+        RebirthStatMaxPerCycle = 25, -- Max stat points spent per cycle
+        RebirthStatWeight = { -- Weight per stat; points are distributed proportionally. 0 = skip that stat
+            ["Money"] = 10, -- Cash income
+            ["Luck"] = 8, -- Roll luck
+            ["Damage"] = 4, -- Damage (tower use)
+            ["Health"] = 4, -- HP (tower use)
+            ["Trait Luck"] = 2, -- Trait reroll luck
+            ["Grade Luck"] = 2 -- Grade reroll luck
+        },
+        RebirthStatLimit = {} -- Per-stat point cap e.g. { ["Trait Luck"] = 20 }; empty = no limit
+    },
+    ["Grade"] = {
+        AutoGrade = true, -- Rerolls Grades using Gems, targeting the highest-earning unit first
+        GradeStopAt = {"A+", "S", "S+", "Z", "Z+", "Omega", "Infinity", "Kami"}, -- Stops rerolling once a Grade from this list is obtained
+        -- Available grades: D, C, B, A, A+, S, S+, Z, Z+, Kami (神), Infinity (∞), Omega (Ω)
+        GradeStopAtOrAbove = true, -- If enabled, also stops when getting a Grade with a multiplier >= the lowest in the list (lowest here is A+)
+        GradeOverrideProtected = true, -- Allows rerolling over locked Grades; S and above are locked by default
+        GradeKeepGems = 0, -- Gems to reserve and not spend on rerolls (may slightly exceed if the game rerolls in batches)
+        GradeMaxUnits = 1 -- How many units to reroll for, sorted by highest income first
+    },
+    ["Sell"] = {
+        AutoSell = true, -- Sells junk units; units on stands, in tower teams, or currently being Trait/Grade rerolled are excluded
+        SellOnlyWhenFull = true, -- Only sells when inventory reaches the set percentage
+        SellFullPercent = 85, -- Inventory % threshold before selling begins
+        SellRarities = {"Common", "Uncommon", "Rare"}, -- Rarities treated as junk
+        SellBelowIncome = 0, -- Also sells units earning less than this value e.g. 10e6 = 10 million; 0 = disabled
+        SellMaxPerBatch = 50, -- Max units sold per batch
+        SellUseless = true, -- If stands are full, units not in use whose income is much lower than the weakest stand unit get sold when inventory hits SellFullPercent
+        SellUselessRatio = 0.5, -- Sells units earning less than this fraction of the weakest stand unit's income (0.5 = half); lower = sells less
+        ProtectGrade = "S" -- Units at this grade or above won't be sold
+    },
+    ["Boosts"] = {
+        AutoUseBoosts = true, -- Uses boosts from inventory; tower boosts are only used while inside a tower
+        BoostBlacklist = {} -- Boosts to never use e.g. {"2x Money", "Luck Boost"}
+    },
+    ["Halloween"] = {
+        AutoHalloweenQuest = true, -- Claims completed Halloween event quests (hourly and daily)
+        HalloweenQuestInterval = 10, -- Check interval in seconds; minimum 5
+        AutoHalloweenPath = true, -- Claims all available rewards on the Pumpkin Pass track
+        AutoHalloweenShop = true, -- Spends Candy in the Halloween shop per the priority list below
+        HalloweenShopMaxPerCycle = 3, -- Max items purchased per cycle
+        HalloweenShopMaxStock = 5, -- Won't buy more of an item once you already have this many (prevents hoarding)
+        HalloweenShopKeepCandy = 0, -- Candy to reserve and not spend; 0 = spend all
+        HalloweenShopPriority = { -- Purchase priority order, top to bottom; names must match the shop exactly
+            "Spooky Luck III", "Candy Pot III", "Pumpkin Pot III", "Haunted Potion",
+            "Spooky Luck II", "Candy Pot II", "Pumpkin Pot II",
+            "Spooky Luck I", "Candy Pot I", "Pumpkin Pot I",
+        },
+        AutoUseHalloweenSpins = true, -- Uses Spins/Jackpots from inventory for a luck multiplier on the next Roll; uses one at a time and waits for the previous one to expire
+        HalloweenSpinOrder = { "Witch's Jackpot", "Pumpkin Jackpot", "Pumpkin Spin" }, -- Use priority order, top to bottom
+        AutoPumpkinDice = true, -- Rolls Pumpkin Dice using Pumpkins
+        PumpkinDiceInterval = 3, -- Roll interval in seconds; minimum 1
+        PumpkinDiceMulti = true, -- If enabled, rolls multiple dice at once when you have enough Pumpkins; if disabled, rolls one at a time
+        PumpkinDiceAutoSellFirst = 6, -- Sets the game to auto-sell units from dice, counting from the bottom up this many units (set once on run); 0 = don't set
+        PumpkinDiceKeepPumpkins = 0, -- Pumpkins to reserve and not roll
+        AutoHalloweenTower = true, -- If enabled, runs Haunted House before normal towers; if disabled, uses only the Tower setting above
+        HalloweenTower = "Auto", -- "Auto" = starts at the first wing and progresses automatically; or lock to a specific wing name
+        AutoTrickTreat = true, -- Warps to the Halloween island to knock on doors and collect Candy; warps back when done
+        TrickTreatReturnHome = true -- Returns to original position after collecting; if disabled, stays at the last door
+    },
+    ["Quirk"] = {
+        AutoQuirk = true, -- Rerolls Quirks for units on stands, targeting the cheapest reroll cost first
+        QuirkStopAt = { "Tycoon", "Midas Touch", "Fortune's Favor" }, -- Stops rerolling once a Quirk from this list is obtained; must not be empty or rerolling is disabled entirely
+        QuirkStopAtOrAbove = false, -- If enabled, also stops when getting a Quirk ranked >= the lowest in the list
+        QuirkOverrideProtected = true, -- Allows rerolling over locked Quirks; if disabled, skips units with a locked Quirk
+        QuirkMaxUnits = 3, -- How many units to reroll for, sorted by cheapest reroll cost first
+        QuirkMaxCashPercent = 25, -- Only rerolls when the cost is within this % of current cash; prevents going broke
+    },
+    ["Performance"] = {
+        FpsBoost = true, -- Removes effects and reduces graphics
+        WhiteScreen = false -- White screen mode; disables 3D rendering entirely
+    }
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Tosixkub012/FractureHub/refs/heads/main/Beta/AD_Kaitun.lua"))()
