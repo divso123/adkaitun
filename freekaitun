@@ -44,14 +44,14 @@ getgenv().Configs = {
         EquipBestTowerTeam = true -- Builds the strongest possible team before entering a tower each time
     },
     ["Trait"] = {
-        AutoTrait = true, -- Rerolls Traits using Trait Rerolls, targeting the highest-earning unit first
+        AutoTrait = false, -- Rerolls Traits using Trait Rerolls, targeting the highest-earning unit first
         TraitStopAt = { "Genesis", "Paradox", "Eternal" }, -- Stops rerolling once a Trait from this list is obtained
         TraitStopAtOrAbove = true, -- If enabled, also stops when getting a Trait with a money multiplier >= the lowest in the list (lowest here is Eternal)
         TraitOverrideProtected = true, -- Allows rerolling over locked Traits; if disabled, skips units with a locked Trait
         TraitMaxUnits = 1 -- How many units to reroll for, sorted by highest income first
     },
     ["RebirthStat"] = {
-        AutoRebirthStat = true, -- Spends Rebirth points on Stats (1 point per rebirth)
+        AutoRebirthStat = false, -- Spends Rebirth points on Stats (1 point per rebirth)
         RebirthStatMaxPerCycle = 25, -- Max stat points spent per cycle
         RebirthStatWeight = { -- Weight per stat; points are distributed proportionally. 0 = skip that stat
             ["Money"] = 10, -- Cash income
@@ -64,7 +64,7 @@ getgenv().Configs = {
         RebirthStatLimit = {} -- Per-stat point cap e.g. { ["Trait Luck"] = 20 }; empty = no limit
     },
     ["Grade"] = {
-        AutoGrade = true, -- Rerolls Grades using Gems, targeting the highest-earning unit first
+        AutoGrade = false, -- Rerolls Grades using Gems, targeting the highest-earning unit first
         GradeStopAt = {"A+", "S", "S+", "Z", "Z+", "Omega", "Infinity", "Kami"}, -- Stops rerolling once a Grade from this list is obtained
         -- Available grades: D, C, B, A, A+, S, S+, Z, Z+, Kami (神), Infinity (∞), Omega (Ω)
         GradeStopAtOrAbove = true, -- If enabled, also stops when getting a Grade with a multiplier >= the lowest in the list (lowest here is A+)
@@ -76,7 +76,7 @@ getgenv().Configs = {
         AutoSell = true, -- Sells junk units; units on stands, in tower teams, or currently being Trait/Grade rerolled are excluded
         SellOnlyWhenFull = true, -- Only sells when inventory reaches the set percentage
         SellFullPercent = 85, -- Inventory % threshold before selling begins
-        SellRarities = {"Common", "Uncommon", "Rare"}, -- Rarities treated as junk
+        SellRarities = {"Common", "Uncommon", "Rare", }, -- Rarities treated as junk
         SellBelowIncome = 0, -- Also sells units earning less than this value e.g. 10e6 = 10 million; 0 = disabled
         SellMaxPerBatch = 50, -- Max units sold per batch
         SellUseless = true, -- If stands are full, units not in use whose income is much lower than the weakest stand unit get sold when inventory hits SellFullPercent
@@ -113,7 +113,7 @@ getgenv().Configs = {
         TrickTreatReturnHome = true -- Returns to original position after collecting; if disabled, stays at the last door
     },
     ["Quirk"] = {
-        AutoQuirk = true, -- Rerolls Quirks for units on stands, targeting the cheapest reroll cost first
+        AutoQuirk = false, -- Rerolls Quirks for units on stands, targeting the cheapest reroll cost first
         QuirkStopAt = { "Tycoon", "Midas Touch", "Fortune's Favor" }, -- Stops rerolling once a Quirk from this list is obtained; must not be empty or rerolling is disabled entirely
         QuirkStopAtOrAbove = false, -- If enabled, also stops when getting a Quirk ranked >= the lowest in the list
         QuirkOverrideProtected = true, -- Allows rerolling over locked Quirks; if disabled, skips units with a locked Quirk
@@ -122,7 +122,7 @@ getgenv().Configs = {
     },
     ["Performance"] = {
         FpsBoost = true, -- Removes effects and reduces graphics
-        WhiteScreen = false -- White screen mode; disables 3D rendering entirely
+        WhiteScreen = true -- White screen mode; disables 3D rendering entirely
     }
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Tosixkub012/FractureHub/refs/heads/main/Beta/AD_Kaitun.lua"))()
